@@ -1,37 +1,64 @@
-var tf = require('@tensorflow/tfjs');
-var iris = require('./iris.json');
-var irisTesting = require('./testingIris.json');
+'use strict';
 
-// convert data
-var trainingData = tf.tensor2d(iris.map(item=> [
-        item.sepal_length, item.sepal_width, item.petal_length, item.petal_width
-    ]
-),[147,4])
+// Imports dependencies and set up http server
+const
+  express = require('express'),
+  bodyParser = require('body-parser'),
+  app = express().use(bodyParser.json()); // creates express http server
 
-// creating model
-var outputData = tf.tensor2d(iris.map(item => [
-    item.species === 'setosa' ? 1 : 0,
-    item.species === 'virginica' ? 1 : 0,
-    item.species === 'versicolor' ? 1 : 0
+// Sets server port and logs message on success
+app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
-]), [147,3])
+// Creates the endpoint for our webhook
+app.post('/webhook', (req, res) => {
 
-// compiling model
-var model = tf.sequential();
+  let body = req.body;
 
-model.add(tf.layers.dense({
-    inputShape: [4],
-    activation: "sigmoid",
-    units: 5
-}))
+  // Checks this is an event from a page subscription
+  if (body.object === 'page') {
 
-model.compile({
-    loss: "meanSquaredError",
-    optimizer: tf.train.adam(.06)
-})
+    // Iterates over each entry - there may be multiple if batched
+    body.entry.forEach(function(entry) {
 
-model.fit(trainingData, outputData, {epochs: 100})
-    .then(() => {
-        model.predict(testingData).print();
-    })
-// predicting model
+      // Gets the message. entry.messaging is an array, but
+      // will only ever contain one message, so we get index 0
+      let webhook_event = entry.messaging[0];
+      console.log(webhook_event);
+    });
+
+    // Returns a '200 OK' response to all requests
+    res.status(200).send('EVENT_RECEIVED');
+  } else {
+    // Returns a '404 Not Found' if event is not from a page subscription
+    res.sendStatus(404);
+  }
+
+});
+
+// Adds support for GET requests to our webhook
+app.get('/webhook', (req, res) => {
+
+  // Your verify token. Should be a random string.
+  let VERIFY_TOKEN = "<YOUR_VERIFY_TOKEN>"
+
+  // Parse the query params
+  let mode = req.query['hub.mode'];
+  let token = req.query['hub.verify_token'];
+  let challenge = req.query['hub.challenge'];
+
+  // Checks if a token and mode is in the query string of the request
+  if (mode && token) {
+
+    // Checks the mode and token sent is correct
+    if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+
+      // Responds with the challenge token from the request
+      console.log('WEBHOOK_VERIFIED');
+      res.status(200).send(challenge);
+
+    } else {
+      // Responds with '403 Forbidden' if verify tokens do not match
+      res.sendStatus(403);
+    }
+  }
+});

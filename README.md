@@ -1,6 +1,7 @@
 # Zoolo APP
 
-This app was build by me and my team in zoo hackathon 2018 and our team name was FrankShark
+
+# This app was build by me and my team in zoo hackathon 2018 and our team name was FrankShark
 
 ![img1](https://github.com/Ishaan28malik/zoolo/blob/master/IMG-20180926-WA0002.jpg)
 ![img2](https://github.com/Ishaan28malik/zoolo/blob/master/IMG-20180926-WA0004.jpg)

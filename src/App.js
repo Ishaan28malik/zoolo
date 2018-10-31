@@ -1,22 +1,16 @@
 import React from 'react';
-
 import { createStackNavigator } from 'react-navigation';
-
 import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
-
 import Home from './src/screens/Home';
 import Profile from './src/screens/Profile';
 import Check from './src/screens/Check';
 import Report from './src/screens/Report';
 import BuyingGuide from './src/screens/BuyingGuide';
 import Single from './src/screens/Single';
-
 import store from './src/store';
 import { Provider } from 'react-redux';
-
 import { Asset, Font, AppLoading } from 'expo';
-
 
 export default class App extends React.Component {
   state = {
@@ -67,7 +61,6 @@ export default class App extends React.Component {
     this.setState({ isLoadingComplete: true });
   };
 }
-
 // export default createStackNavigator({
 //   Login: {
 //     screen: LoginScreen

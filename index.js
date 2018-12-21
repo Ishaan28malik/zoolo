@@ -1,5 +1,3 @@
-
-
 'use strict';
 
 // Imports dependencies and set up http server
@@ -60,4 +58,5 @@ app.get('/webhook', (req, res) => {
       res.sendStatus(403);
     }
   }
-});
+}
+       );

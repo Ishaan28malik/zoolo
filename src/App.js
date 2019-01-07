@@ -16,7 +16,6 @@ export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
-
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
@@ -28,7 +27,6 @@ export default class App extends React.Component {
       );
     } else {
       return (
-
         <Provider store={store}>
           <HomeScreen />
         </Provider>
@@ -36,7 +34,6 @@ export default class App extends React.Component {
       );
     }
   }
-
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
@@ -50,13 +47,11 @@ export default class App extends React.Component {
       }),
     ]);
   };
-
   _handleLoadingError = error => {
     // In this case, you might want to report the error to your error
     // reporting service, for example Sentry
     console.warn(error);
   };
-
   _handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true });
   };

@@ -34,6 +34,7 @@ export default class App extends React.Component {
       );
     }
   }
+
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
@@ -47,6 +48,7 @@ export default class App extends React.Component {
       }),
     ]);
   };
+
   _handleLoadingError = error => {
     // In this case, you might want to report the error to your error
     // reporting service, for example Sentry

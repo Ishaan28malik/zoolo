@@ -1,4 +1,4 @@
-# **Zoolo** </br></br>
+# **Zoolo** </br></br> :cow: :panda_face: :horse: :penguin:
 
 # An Android APPLICATION </br></br>
 
